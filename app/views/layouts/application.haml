@@ -19,3 +19,9 @@
       .row
         .col-lg-12
           = yield
+
+    - if flash[:notice]
+      %p.notice= flash[:notice]
+
+    - if flash[:alert]
+      %p.notice= flash[:alert]
