@@ -1,9 +1,11 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!
 
   expose(:review)
   expose(:product)
 
   def edit
+    (flash[:error] = "You don't have permission to do this."; redirect_to :back) unless current_user.products.includes(review) || current_user.includes(review)
   end
 
   def create
@@ -11,6 +13,7 @@ class ReviewsController < ApplicationController
 
     if review.save
       product.reviews << review
+      current_user << review
       redirect_to category_product_url(product.category, product), notice: 'Review was successfully created.'
     else
       render action: 'new'
@@ -18,8 +21,13 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    review.destroy
-    redirect_to category_product_url(product.category, product), notice: 'Review was successfully destroyed.'
+    if current_user.product.includes(review) || current_user.includes(review)
+      review.destroy
+      redirect_to category_product_url(product.category, product), notice: 'Review was successfully destroyed.'
+    else
+      flash[:error] = "You don't have permission to do this."
+      redirect_to :back
+    end
   end
 
   private

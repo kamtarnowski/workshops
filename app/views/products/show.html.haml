@@ -20,6 +20,7 @@
 
 = render reviews
 
-= link_to 'Edit', edit_category_product_path(category.id, product.id)
+- if user_signed_in? && product.user == current_user
+  = link_to 'Edit', edit_category_product_path(category.id, product.id)
 \|
 = link_to 'Back', category_products_path, class: 'btn btn-primary'
