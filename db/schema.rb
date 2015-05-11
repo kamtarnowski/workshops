@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505005939) do
+ActiveRecord::Schema.define(version: 20150509145450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20150505005939) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "average_rating", default: 0
   end
+
+  add_index "categories", ["average_rating"], name: "index_categories_on_average_rating", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "title"

@@ -8,9 +8,9 @@ gem 'decent_exposure'
 gem 'decent_decoration'
 gem 'devise'
 gem 'simple_form', '~> 3.1.0rc'
-gem 'bootstrap-sass', '~> 3.1.0'
+gem 'bootstrap-sass'
 gem 'haml-rails'
-gem 'sass-rails', github: 'rails/sass-rails'
+gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'quiet_assets'
@@ -19,7 +19,10 @@ gem 'therubyracer', platforms: :ruby
 gem 'travis'
 gem 'ffaker'
 gem 'konf'
+
 gem 'byebug'
+gem "better_errors"
+gem 'gritter'
 
 group :development do
   gem 'spring'

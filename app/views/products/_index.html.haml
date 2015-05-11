@@ -1,0 +1,47 @@
+%h1.text-center LISTING PRODUCTS
+
+%br
+
+- if user_signed_in?
+  - if current_user.products.any?
+    - check_edit = current_user.products.each do |product|
+      - object.products.any? { |p| p == product }
+  - else
+    - check_edit = false
+
+%table.table.table-responsive.table-hover
+  %tr
+    %th Title
+    %th Description
+    %th Price
+    %th Last rating
+    %th Average rating
+    - if user_signed_in?
+      - if current_user.admin? || check_edit
+        %th Edit
+
+  - object.products.each do |product|
+    %tr
+      %td
+        %h5
+          %em= product.title
+      %td
+        %h5
+          = product.description
+      %td
+        %h5
+          = product.price
+      %td
+      %td
+      - if check_edit
+        %td
+
+
+%br
+
+
+-#%td= link_to 'Show', category_product_path(product.category, product)
+-#
+-#      - if user_signed_in? && product.user == current_user
+-#        %td= link_to 'Edit', edit_category_product_path(product.category, product)
+-#        %td= link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }

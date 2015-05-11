@@ -1,13 +1,31 @@
-= form_for category do |f|
-  - if category.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(category.errors.count, "error")} prohibited this category from being saved:"
-      %ul
-        - category.errors.full_messages.each do |msg|
-          %li= msg
+- if current_page?(root_path) || current_page?(categories_path)
+  = form_for object do |f|
+    - if object.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(object.errors.count, "error")} prohibited this category from being saved:"
+        %ul
+          - object.errors.full_messages.each do |msg|
+            %li= msg
 
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
+    .form-group
+      = f.label :name, "Name"
+      = f.text_field :name, class: 'form-control'
 
-  = f.submit 'Save', class: 'btn btn-default'
+    = f.submit 'Save', class: 'btn btn-default'
+
+- else
+  = form_for category do |f|
+    - if category.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(category.errors.count, "error")} prohibited this category from being saved:"
+        %ul
+          - category.errors.full_messages.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+
+    = f.submit 'Save', class: 'btn btn-default'
+
+

@@ -1,0 +1,33 @@
+@mixin br($value) {
+  -webkit-border-radius: $value;
+  -moz-border-radius: $value;
+  -ms-border-radius: $value;
+  border-radius: $value;
+}
+
+#gritter-item-1 > div > div.gritter-with-image > p {
+    font-size: 16px;
+}
+
+#logo_on {
+  padding: 0;
+  display: none;
+}
+
+body {
+  background-image: url('/assets/ws_back_scaled_50.jpg');
+}
+
+.container {
+  @include br(0 0 5px 5px);
+  background:rgba(255,255,255, 0.9);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-left: #337ab7 solid 2px;
+  border-right: #337ab7 solid 2px;
+  border-bottom: #337ab7 solid 2px;
+}
+
+.navbar-default {
+  margin: 0 !important;
+}

@@ -1,19 +1,46 @@
-%p#notice= notice
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
 
-%p
-  %b Name:
-  = category.name
+    %p
+      %b Name:
+      %em
+        = category.name
 
-%p
-  - category.products.each do |product|
-    = product.title
+    %br
 
-- if user_signed_in?
-  %p
-    %h3 New product
-    = render 'products/form'
+.row
+  .col-md-12
 
-    - if current_user.admin?
-      = link_to 'Edit', edit_category_path(category)
-\|
-= link_to 'Back', categories_path, class: 'btn btn-primary'
+    - if category.products.any?
+      = render 'products/index', layout: false, object: category
+      .row
+        .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+          %br
+          = link_to 'Create new Product', '', remote: true, class: 'btn btn-default new_product'
+          %br
+          %br
+            %div{'class' => 'new_product_form', 'style' => 'display: none'}
+              = render 'products/form'
+    - else
+      .row
+        .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+          %h3 There are no products in this category yet.
+          - if user_signed_in?
+            %h3 Please create new one, by clicking here:
+            = link_to 'New Product', '', remote: true, class: 'btn btn-default new_product'
+            %br
+            %br
+              %div{'class' => 'new_product_form', 'style' => 'display: none'}
+                = render 'products/form'
+          - else
+            %h3 Please sign in in order to create new one.
+            %br
+
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    or
+    \&nbsp;
+    = link_to 'Back', categories_path, class: 'btn btn-primary'
+
+
+= javascript_include_tag 'categories'

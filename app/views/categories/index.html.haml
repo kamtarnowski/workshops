@@ -1,21 +1,68 @@
-%h1 Listing categories
+.row
+  .col-md-12{'class' => 'text-center'}
+    %h1 LISTING CATEGORIES
 
-%table.table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
+    %br
 
-  - categories.each do |category|
-    %tr
-      %td= category.name
-      %td= link_to 'Show', category
-      - if current_user.admin?
-        %td= link_to 'Edit', edit_category_path(category)
-        %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+    %table.table.table-responsive.table-hover{'class' => 'text-left', 'style' => 'width: 100%'}
+      %tr
+        %th Name
+        %th Last product
+        %th Average rating
+        - if user_signed_in?
+          - if current_user.admin?
+            %th Edit
 
-%br
+      - categories.each do |category|
+        %tr
+          %td
+            %h5= link_to category.name, category, style: 'text-decoration: none'
+          %td
+            - if category.products.any?
+              %h5
+                - last = category.products.last
+                = link_to last.title, category_product_path(id: last.id, category_id: category.id), style: 'text-decoration: none; color: #009900'
+                - if last.user.present?
+                  (added by
+                  = link_to " #{last.user.firstname} #{last.user.lastname}", "#", style: 'text-decoration: none; color: #FF9900'
+                  )
+              %h5
+                = "created: #{time_ago_in_words(last.created_at)} ago"
+            - else
+              %h5 n/a
+          %td
+            - if category.average_rating == 0
+              %h5 n/a
+            - else
+              %h5
+                = "#{category.average_rating} / 5"
+          - if user_signed_in?
+            - if current_user.admin?
+              %td
+                = link_to edit_category_path(category), remote: true do
+                  %span.glyphicon.glyphicon-edit{'style' => 'font-size: 1.6em'}
+        %tr{'id' => "category_#{category.id}", 'style' => 'display:none'}
+          %td
+          %td
+            .col-md-8
+              = render 'categories/form', object: category
+          %td{'style' => 'vertical-align: middle'}
+            = link_to category, method: :delete, data: { confirm: 'Are you sure?' } do
+              %span.glyphicon.glyphicon-trash{'style' => 'font-size: 1.6em'}
+                Delete
+          %td
 
-- if current_user.admin?
-  = link_to 'New Category', new_category_path
+    %br
+
+  - if user_signed_in?
+    - if current_user.admin?
+      .row
+        .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+          = link_to 'New Category', '', class: 'btn btn-primary new_category', remote: true
+          %div#new_category_form{'style' => 'display:none'}
+            %br
+            .col-md-10.col-xs-12
+              = render 'form', object: Category.new
+
+
+= javascript_include_tag 'categories'

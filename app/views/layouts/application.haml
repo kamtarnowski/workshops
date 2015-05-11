@@ -12,16 +12,36 @@
     %nav.navbar.navbar-default
       .container-fluid
         .navbar-header
-          %span.navbar-brand #{AppConfig.workshops_name}
-        %p.navbar-text.navbar-right
-          Links should go here
-    .container-fluid
-      .row
-        .col-lg-12
-          = yield
+          %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %span.navbar-brand#logo_off #{AppConfig.workshops_name}
+          %span.navbar-brand#logo_on= link_to image_tag('Logo.png', alt: 'Netguru Gliwice Workshops 2015'), root_path
+        #myNavbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  %span.glyphicon.glyphicon-log-out
+                    Log Out
+            - else
+              %li
+                = link_to new_user_registration_path do
+                  %span.glyphicon.glyphicon-user+ Sign Up
+              %li
+                = link_to new_user_session_path do
+                  %span.glyphicon.glyphicon-log-in
+                    Sign In
+    .container
+      = yield
 
-    - if flash[:notice]
-      %p.notice= flash[:notice]
+    -#- if flash[:notice]
+    -#  %p.notice= flash[:notice]
+    -#
+    -#- if flash[:alert]
+    -#  %p.alert= flash[:alert]
 
-    - if flash[:error]
-      %p.alert= flash[:error]
+    - flash.each do |key, value|
+      - key = 'warning' if key == 'alert'
+      = js add_gritter(value, flash[key], :image => key)
