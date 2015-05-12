@@ -36,12 +36,6 @@
     .container
       = yield
 
-    -#- if flash[:notice]
-    -#  %p.notice= flash[:notice]
-    -#
-    -#- if flash[:alert]
-    -#  %p.alert= flash[:alert]
-
     - flash.each do |key, value|
       - key = 'warning' if key == 'alert'
       = js add_gritter(value, flash[key], :image => key)

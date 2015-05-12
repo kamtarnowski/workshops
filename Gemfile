@@ -23,6 +23,7 @@ gem 'konf'
 gem 'byebug'
 gem "better_errors"
 gem 'gritter'
+gem 'binding_of_caller'
 
 group :development do
   gem 'spring'

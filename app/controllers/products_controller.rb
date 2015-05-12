@@ -16,7 +16,10 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    (redirect_to category_product_url(product.category, product); flash[:error] = "You are not allowed to edit this product.") unless product.user == current_user
+    respond_to do |format|
+      format.html { (redirect_to category_product_url(product.category, product); flash[:error] = "You are not allowed to edit this product.") unless product.user == current_user }
+      format.js {render layout: false}
+    end
   end
 
   def create

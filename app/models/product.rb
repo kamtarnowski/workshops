@@ -11,4 +11,8 @@ class Product < ActiveRecord::Base
     sum = self.reviews.pluck(:rating).reduce(:+).to_f
     (sum / count)
   end
+
+  def to_param
+    "#{id} #{title.truncate(25, omission: '...')}".parameterize
+  end
 end

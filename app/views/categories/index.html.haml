@@ -24,7 +24,7 @@
                 = link_to last.title, category_product_path(id: last.id, category_id: category.id), style: 'text-decoration: none; color: #009900'
                 - if last.user.present?
                   (added by
-                  = link_to " #{last.user.firstname} #{last.user.lastname}", "#", style: 'text-decoration: none; color: #FF9900'
+                  = link_to " #{last.user.firstname} #{last.user.lastname}", "", style: 'text-decoration: none; color: #FF9900'
                   )
               %h5
                 = "created: #{time_ago_in_words(last.created_at)} ago"
@@ -46,7 +46,7 @@
           %td
             .col-md-8
               = render 'categories/form', object: category
-          %td{'style' => 'vertical-align: middle'}
+          %td
             = link_to category, method: :delete, data: { confirm: 'Are you sure?' } do
               %span.glyphicon.glyphicon-trash{'style' => 'font-size: 1.6em'}
                 Delete
@@ -58,7 +58,7 @@
     - if current_user.admin?
       .row
         .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
-          = link_to 'New Category', '', class: 'btn btn-primary new_category', remote: true
+          = link_to 'New Category', '', class: 'btn btn-primary new_category_show', remote: true
           %div#new_category_form{'style' => 'display:none'}
             %br
             .col-md-10.col-xs-12
