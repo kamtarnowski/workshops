@@ -60,7 +60,7 @@
               = link_to edit_category_product_path(product, category_id: product.category.id), remote: true do
                 %span.glyphicon.glyphicon-edit{'style' => 'font-size: 1.6em'}
     %tr{'style' => 'display: none', 'id' => "product_#{product.id}" }
-      = simple_form_for product, url: update_product_path(product, product.category), method: :put  do |form|
+      = simple_form_for [category, product] do |form|
         %td
           = form.input :title
         %td
