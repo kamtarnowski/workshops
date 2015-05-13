@@ -12,6 +12,16 @@ class ApplicationController < ActionController::Base
     response.headers["Cache-Control"] = "no-store"
   end
 
+  def user_status(n)
+    if n <= 10
+      'Newbie'
+    elsif n <= 50
+      'Amateur'
+    else
+      'Hardcore'
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

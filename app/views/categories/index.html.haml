@@ -24,7 +24,7 @@
                 = link_to last.title, category_product_path(id: last.id, category_id: category.id), style: 'text-decoration: none; color: #009900'
                 - if last.user.present?
                   (added by
-                  = link_to " #{last.user.firstname} #{last.user.lastname}", "", style: 'text-decoration: none; color: #FF9900'
+                  = link_to " #{last.user.firstname} #{last.user.lastname}", show_user_path(last.user), style: 'text-decoration: none; color: #FF9900'
                   )
               %h5
                 = "created: #{time_ago_in_words(last.created_at)} ago"

@@ -20,10 +20,12 @@ gem 'travis'
 gem 'ffaker'
 gem 'konf'
 
+# Added five following gems only, but it could be many more.
 gem 'byebug'
 gem "better_errors"
-gem 'gritter'
 gem 'binding_of_caller'
+gem 'gritter'
+gem 'foreman'
 
 group :development do
   gem 'spring'

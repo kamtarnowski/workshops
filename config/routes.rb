@@ -5,9 +5,16 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+      registrations: "users/registrations" ,
+      sessions: "users/sessions"
+  }
+
+  devise_scope :user do
+    get 'users/registrations/random_avatar' => 'users/registrations#random_avatar', as: :random_avatar
+    get 'users/:id' => 'users/sessions#show', as: :show_user
+  end
 
   root 'categories#index'
 
-  get 'avatars/random_avatar' => 'avatars#random_avatar', as: :random_avatar
 end

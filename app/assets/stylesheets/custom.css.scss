@@ -53,3 +53,20 @@ tr td {
     }
   }
 }
+
+body > nav > div > div.navbar-header {
+  padding-top: 3px
+}
+
+.user_headers {
+  .bg-info {
+    @include br(10px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .bg-success {
+    @include br(10px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

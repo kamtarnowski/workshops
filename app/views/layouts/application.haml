@@ -22,16 +22,25 @@
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li
+                = link_to image_tag("avatars/#{current_user.avatar}", width: '25px', height: '25px', alt: "#{current_user.firstname} #{current_user.lastname}", class: 'img-rounded') + " Profile",show_user_path(current_user)
+              %li{'style' => 'display: table'}
                 = link_to destroy_user_session_path, method: :delete do
-                  %span.glyphicon.glyphicon-log-out
+                  %span.glyphicon.glyphicon-log-out{'style' => 'font-size: 1.8em; vertical-align: middle; display: table-cell'}
+                  %span{'style' => 'display: table-cell; vertical-align: middle;'}
+                    \&nbsp;
                     Log Out
             - else
-              %li
+              %li{'style' => 'display: table'}
                 = link_to new_user_registration_path do
-                  %span.glyphicon.glyphicon-user+ Sign Up
-              %li
+                  %span.glyphicon.glyphicon-user{'style' => 'font-size: 1.6em; vertical-align: middle; display: table-cell'}+
+                  %span{'style' => 'display: table-cell; vertical-align: middle;'}
+                    \&nbsp;
+                    Sign Up
+              %li{'style' => 'display: table'}
                 = link_to new_user_session_path do
-                  %span.glyphicon.glyphicon-log-in
+                  %span.glyphicon.glyphicon-log-in{'style' => 'font-size: 1.8em; vertical-align: middle; display: table-cell'}
+                  %span{'style' => 'display: table-cell; vertical-align: middle;'}
+                    \&nbsp;
                     Sign In
     .container
       = yield

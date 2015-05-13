@@ -25,7 +25,7 @@
       %td
         %h5
           %em= link_to product.title, category_product_path(product.category, product)
-      %td
+      %td.col-md-4
         %h5
           = product.description
       %td
@@ -37,7 +37,7 @@
           %h5
             = show_star(last.rating)
             (added by
-            = link_to "#{last.user.firstname} #{last.user.lastname}", '', style: 'text-decoration: none; color: #FF9900'
+            = link_to "#{last.user.firstname} #{last.user.lastname}", show_user_path(last.user), style: 'text-decoration: none; color: #FF9900'
             )
           %h5
             created:

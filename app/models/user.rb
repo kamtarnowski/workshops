@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :reviews
   has_many :products
+
+  def to_param
+    "#{id} #{(firstname+lastname).truncate(25, omission: '...')}".parameterize
+  end
 end

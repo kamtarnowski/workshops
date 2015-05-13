@@ -1,0 +1,14 @@
+%h2.text-center SIGN IN
+
+.row
+  .col-md-4.col-md-offset-2.col-xs-8.col-xs-offset-2{'style' => 'margin-top: 20px'}
+
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-inputs
+        = f.input :email, required: true, autofocus: true, as: :string
+        = f.input :password, required: true
+        = f.input :remember_me, as: :select, include_blank: false, selected: false if devise_mapping.rememberable?
+      .form-actions
+        = f.button :submit, "Sign in"
+    %br
+    = render "devise/shared/links"
