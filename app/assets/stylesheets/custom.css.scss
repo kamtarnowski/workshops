@@ -35,3 +35,12 @@ body {
 tr td {
   vertical-align: middle !important;
 }
+
+#new_review_display {
+  position: fixed;
+  border: solid #337ab7 2px;
+  @include br(5px);
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-left: 40px;
+}

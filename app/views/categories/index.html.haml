@@ -35,7 +35,7 @@
               %h5 n/a
             - else
               %h5
-                = "#{category.average_rating} / 5"
+                = "#{category.average_rating.round(1)} / 5"
           - if user_signed_in?
             - if current_user.admin?
               %td
@@ -45,7 +45,7 @@
           %td
           %td
             .col-md-8
-              = render 'categories/form', object: category
+              = render 'categories/form', category: category
           %td
             = link_to category, method: :delete, data: { confirm: 'Are you sure?' } do
               %span.glyphicon.glyphicon-trash{'style' => 'font-size: 1.6em'}
@@ -62,7 +62,7 @@
           %div#new_category_form{'style' => 'display:none'}
             %br
             .col-md-10.col-xs-12
-              = render 'form', object: Category.new
+              = render 'form'
 
 
 = javascript_include_tag 'categories'

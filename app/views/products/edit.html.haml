@@ -1,7 +1,11 @@
-%h1 Editing product
+%h1.text-center Editing product
 
-= render 'form'
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    = render 'form'
 
-= link_to 'Show', category_product_path(category, product)
-\|
-= link_to 'Back', category_path(category)
+    %br
+
+    = link_to 'Show', category_product_path(category, product)
+    \|
+    = link_to 'Back', category_path(category)

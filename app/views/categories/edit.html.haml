@@ -1,7 +1,11 @@
-%h1 Editing category
+%h1.text-center Editing category
 
-= render 'form'
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    = render 'form'
 
-= link_to 'Show', category
-\|
-= link_to 'Back', categories_path, class: 'btn btn-primary'
+  %br
+
+  = link_to 'Show', category
+  \|
+  = link_to 'Back', categories_path, class: 'btn btn-primary'

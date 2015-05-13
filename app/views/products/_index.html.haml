@@ -52,11 +52,11 @@
             n/a
         - else
           %h5
-            = "#{product.average_rat} / 5"
+            = "#{product.average_rat.round(1)} / 5"
       - if user_signed_in?
         - if current_user.admin? || check_edit
           %td
-            - if current_user.products.any? { |p| p == product }
+            - if current_user.products.any? { |p| p == product } || current_user.admin?
               = link_to edit_category_product_path(product, category_id: product.category.id), remote: true do
                 %span.glyphicon.glyphicon-edit{'style' => 'font-size: 1.6em'}
     %tr{'style' => 'display: none', 'id' => "product_#{product.id}" }

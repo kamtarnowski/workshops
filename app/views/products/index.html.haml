@@ -1,23 +1,84 @@
-%h1 Listing products
+%h1.text-center LISTING PRODUCTS
 
-%table
+%br
+
+- if user_signed_in?
+  - if current_user.products.any?
+    - check_edit = current_user.products.each do |product|
+      - category.products.any? { |p| p == product }
+  - else
+    - check_edit = false
+
+%table.table.table-responsive.table-hover
   %tr
     %th Title
     %th Description
     %th Price
-    %th
-    %th
-    %th
+    %th Last rating
+    %th Average rating
+    - if user_signed_in?
+      - if current_user.admin? || check_edit
+        %th Edit
 
-  - products.each do |product|
+  - category.products.each do |product|
     %tr
-      %td= product.title
-      %td= product.description
-      %td= product.price
-      %td= link_to 'Show', category_product_path(product.category, product)
-
-      - if user_signed_in? && product.user == current_user
-        %td= link_to 'Edit', edit_category_product_path(product.category, product)
-        %td= link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }
-
+      %td
+        %h5
+          %em= link_to product.title, category_product_path(product.category, product)
+      %td
+        %h5
+          = product.description
+      %td
+        %h5
+          = product.price
+      %td
+        - if product.reviews.any?
+          - last = product.reviews.last
+          %h5
+            = show_star(last.rating)
+            (added by
+            = link_to "#{last.user.firstname} #{last.user.lastname}", '', style: 'text-decoration: none; color: #FF9900'
+            )
+          %h5
+            created:
+            = time_ago_in_words(last.created_at)
+            ago
+        - else
+          %h5
+            n/a
+      %td
+        - if product.average_rat == 0
+          %h5
+            n/a
+        - else
+          %h5
+            = "#{product.average_rat.round(1)} / 5"
+      - if user_signed_in?
+        - if current_user.admin? || check_edit
+          %td
+            - if current_user.products.any? { |p| p == product } || current_user.admin?
+              = link_to edit_category_product_path(product, category_id: product.category.id), remote: true do
+                %span.glyphicon.glyphicon-edit{'style' => 'font-size: 1.6em'}
+    %tr{'style' => 'display: none', 'id' => "product_#{product.id}" }
+      = simple_form_for product, url: update_product_path(product, product.category), method: :put  do |form|
+        %td
+          = form.input :title
+        %td
+          = form.input :description
+        %td
+          = form.input :price
+        %td
+          = form.button :submit
+        %td
+          = link_to category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' } do
+            %span.glyphicon.glyphicon-trash{'style' => 'font-size: 1.6em'}
+        %td
 %br
+
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    %br
+    %h5
+      or
+      \&nbsp;
+      = link_to 'Back', categories_path, class: 'btn btn-primary'

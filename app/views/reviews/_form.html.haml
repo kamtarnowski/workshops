@@ -1,14 +1,10 @@
-= simple_form_for [category, product, review] do |f|
-  - if review.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(review.errors.count, "error")} prohibited this review from being saved:"
-      %ul
-        - review.errors.full_messages.each do |msg|
-          %li= msg
-  .form-group
-    = f.label :content
-    = f.text_area :content, class: 'form-control'
-  .form-group
-    = f.input :rating, collection: 1..5, class: 'form-control'
+.row
+  = simple_form_for [category, product, review] do |f|
 
-  = f.submit 'Save', class: 'btn btn-default'
+    = f.input :content, as: :text
+    .col-md-6.col-xs-3{'style' => 'padding: 0'}
+      = f.input :rating, collection: 1..5, include_blank: false, selected: 5
+    .clearfix
+    = f.input :user_id, :as => :hidden, :input_html => { :value => current_user.id }
+    = f.input :product_id, :as => :hidden, :input_html => { :value => product.id }
+    = f.button :submit, 'Save', class: 'btn btn-default'

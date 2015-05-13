@@ -1,4 +1,24 @@
-%p= review.content
-%p
-  %b= review.rating
-  %em= review.author
+.row
+  .col-md-2.col-xs-3
+    = review.author
+
+  .col-md-10.col-xs-9
+    = show_star(review.rating)
+    %p
+      = "created: #{review.created_at.strftime("%d %b. %Y")}"
+      - if user_signed_in?
+        - if current_user.reviews.any? { |r| r == review } || current_user.admin?
+          = link_to edit_category_product_review_path(review.product.category, review.product, review), remote: true, style: 'margin-left: 20px' do
+            %span.glyphicon.glyphicon-edit{'style' => 'font-size: 1.6em'}
+          = link_to category_product_review_path(review.product.category, review.product, review), method: :delete, data: { confirm: 'Are you sure?' }, style: 'margin-left: 10px' do
+            %span.glyphicon.glyphicon-trash{'style' => 'font-size: 1.6em'}
+
+    %blockquote.blockquote
+      %h5
+        %em
+          = review.content
+
+    - if user_signed_in?
+      %div{'id' => "review_#{review.id}", 'style' => 'display: none'}
+        = render 'reviews/form', category: review.product.category, product: review.product, review: review
+%hr

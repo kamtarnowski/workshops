@@ -1,23 +1,71 @@
-%p
-  %b Title:
-  = product.title
-%p
-  %b Description:
-  = product.description
-%p
-  %b Price:
-  = product.price
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    %p
+      %b Title:
+      = product.title
+    %p
+      %b Description:
+      = product.description
+    %p
+      %b Price:
+      = product.price
+    %p
+      %b Category
+      = product.category.name
 
-%p
-  %b Category
-  = product.category.name
+%br
 
-%h3 Reviews
-= render 'reviews/form', product => product, product.category => category
+- if product.reviews.any?
+  .row
+    .col-md-6.col-md-offset-1.col-xs-8.col-xs-offset-2
+      %h3.text-center Reviews
 
-= render reviews
+    - if user_signed_in?
+      .col-md-4.col-xs-8
+        %div.new_review_form.hidden-xs.hidden-sm#new_review_display
+          %h3 Create new review
+          %br
+            = render 'reviews/form', locals: { product: product, category: product.category }
 
-- if user_signed_in? && product.user == current_user
-  = link_to 'Edit', edit_category_product_path(category.id, product.id)
-\|
-= link_to 'Back', category_products_path, class: 'btn btn-primary'
+  %br
+  %br
+
+  .row
+    .col-md-6.col-md-offset-1.col-xs-10.col-xs-offset-1
+
+      = render reviews
+
+    - if user_signed_in?
+      .col-md-3.col-xs-8.col-xs-offset-2
+        = link_to "Create new review", '', class: 'btn btn-default new_review_show hidden-md hidden-lg', remote: true, style: 'margin-top: 20px'
+        %div.new_review_form.hidden-md.hidden-lg{'style' => 'display: none'}
+          %br
+            = render 'reviews/form', locals: { product: product, category: product.category }
+
+- else
+  .row
+    .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+      %h3 There are no reviews yet.
+      - if user_signed_in?
+        %h3 You can create them by clicking:
+        = link_to "Create new review", '', class: 'btn btn-default new_review_show', remote: true
+        %div.new_review_form{'style' => 'display: none'}
+          %br
+          = render 'reviews/form', locals: { product: product, category: product.category }
+      - else
+        %h3 Please sign in in order to create new one.
+
+.row
+  .col-md-6.col-md-offset-2.col-xs-8.col-xs-offset-2
+    %br
+
+    - if user_signed_in?
+      - if product.user == current_user || current_user.admin?
+        = link_to 'Edit Product', edit_category_product_path(category.id, product.id), class: 'btn btn-info'
+    %h5
+      or
+      \&nbsp;
+      = link_to 'Back', category_products_path, class: 'btn btn-primary'
+
+
+= javascript_include_tag 'products'

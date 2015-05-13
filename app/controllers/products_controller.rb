@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if product.user == current_user
+    if product.user == current_user || current_user.admin?
       if self.product.update(product_params)
         redirect_to category_product_url(category, product), notice: 'Product was successfully updated.'
       else
@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    if product.user == current_user
+    if product.user == current_user || current_user.admin?
       product.destroy
       redirect_to category_url(product.category), notice: 'Product was successfully destroyed.'
     else
